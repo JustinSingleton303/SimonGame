@@ -11,6 +11,7 @@ var gameOn = false;
 
 $(".green").click(function(){
   sound("sounds/green.mp3");
+
 });
 
 $(".red").click(function(){
@@ -38,7 +39,23 @@ function sound(url) {
   new Audio(url).play();
 }
 
+/*$(document).click(function(event){
+  var colorClicked = event.target.id;
+  console.log(colorClicked);
+});*/
+
 $(document).keydown(function(){
+  if(gameOn === false){
     var colorToSound = newSequence();
     sound("sounds/" + colorToSound + ".mp3");
+    gameOn = true;
+
+    while(gameOn === true){
+      $(document).click(function(event){
+        var colorClicked = event.target.id;
+        console.log(colorClicked);
+
+      });gameOn = false;
+    }
+  }
 });
