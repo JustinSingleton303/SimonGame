@@ -7,8 +7,9 @@
 
 var colorArray = ["green", "red", "yellow", "blue"];
 var gamePattern = [];
+var userPattern = [];
 var gameOn = false;
-
+/*
 $(".green").click(function(){
   sound("sounds/green.mp3");
 
@@ -24,7 +25,7 @@ $(".yellow").click(function(){
 
 $(".blue").click(function(){
   sound("sounds/blue.mp3");
-});
+});*/
 
 /* functions */
 function newSequence(){
@@ -32,6 +33,7 @@ function newSequence(){
   var colorSelected = colorArray[btnNumber];
   gamePattern.push(colorSelected);
   $("." + colorSelected).fadeOut().fadeIn();
+  sound("sounds/" + colorSelected + ".mp3");
   return colorSelected;
 }
 
@@ -39,23 +41,36 @@ function sound(url) {
   new Audio(url).play();
 }
 
-/*$(document).click(function(event){
+function gameRound(){
+
+}
+
+function animatePress(currentColor){
+  $("." + currentColor).addClass("pressed");
+  setTimeout(function(){
+    $("." + currentColor).removeClass("pressed");
+  }, 100);
+}
+
+
+
+function gameOver(){
+  gamePattern = [];
+  userPattern = [];
+  gameOn = false;
+}
+
+$(document).click(function(event){
   var colorClicked = event.target.id;
   console.log(colorClicked);
-});*/
+  sound("sounds/" + colorClicked + ".mp3");
+  animatePress(colorClicked);
+
+});
 
 $(document).keydown(function(){
   if(gameOn === false){
-    var colorToSound = newSequence();
-    sound("sounds/" + colorToSound + ".mp3");
+    newSequence();
     gameOn = true;
-
-    while(gameOn === true){
-      $(document).click(function(event){
-        var colorClicked = event.target.id;
-        console.log(colorClicked);
-
-      });gameOn = false;
     }
-  }
 });
