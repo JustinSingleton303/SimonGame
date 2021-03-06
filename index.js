@@ -45,7 +45,6 @@ function checkAnswer(currentLevel){
 }
 
 
-
 function animatePress(currentColor){
   $("." + currentColor).addClass("pressed");
   setTimeout(function(){
