@@ -20,6 +20,7 @@ function newSequence(){
   $("." + colorSelected).fadeOut().fadeIn();
   sound("sounds/" + colorSelected + ".mp3");
   level++;
+  $("h1").text("Level " + level);
 }
 
 function sound(url) {
@@ -27,13 +28,19 @@ function sound(url) {
 }
 
 function checkAnswer(currentLevel){
-  if(userPattern[currentLevel] !== gamePattern[currentLevel]){
-    console.log("incorrect");
-    return "incorrect";
-  }
-  else if(userPattern[currentLevel] === gamePattern[currentLevel]){
+  if(userPattern[currentLevel] === gamePattern[currentLevel]){
     console.log("correct");
-    return "correct";
+
+    if(userPattern.length === gamePattern.length){
+      setTimeout(function(){
+        userPattern = [];
+        newSequence();
+      }, 1000);
+    }
+  }
+  else if(userPattern[currentLevel] !== gamePattern[currentLevel]){
+    console.log("incorrect");
+    gameOver();
   }
 }
 
@@ -48,9 +55,11 @@ function animatePress(currentColor){
 
 
 function gameOver(){
+  $("h1").text("Press A Key to Start");
   gamePattern = [];
   userPattern = [];
   gameOn = false;
+  level = 0;
 }
 
 $(document).click(function(event){
@@ -65,7 +74,7 @@ $(document).click(function(event){
 $(document).keydown(function(){
   if(gameOn === false){
     newSequence();
-    $("h1").text("Level " + level);
+
     gameOn = true;
     }
 
